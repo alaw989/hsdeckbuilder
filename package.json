@@ -1,0 +1,27 @@
+{
+  "name": "hs_deck_builder",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "ramda": "^0.25.0",
+    "rapidapi-connect": "^0.0.6",
+    "react": "^16.10.2",
+    "react-bootstrap-typeahead": "^2.0.0",
+    "react-dom": "^16.10.2",
+    "react-scripts": "1.0.17",
+    "require-dir": "^0.3.2",
+    "styled-components": "^2.2.3",
+    "unirest": "^0.6.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "main": "index.js",
+  "repository": "https://github.com/alaw989/react-hsdeckbuilder.git",
+  "author": "alaw989 <alaw989@gmail.com>",
+  "license": "MIT"
+}
