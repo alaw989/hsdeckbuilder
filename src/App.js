@@ -10,7 +10,6 @@ import DeckList from "./DeckList.js";
 import { Header } from "./Header";
 import { ClassCardList } from "./ClassCardList";
 
-
 const AsyncTypeahead = asyncContainer(Typeahead);
 const cardURL = card =>
   `https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/${card}`;
@@ -129,9 +128,19 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container-fluid">
-          <div className="col-xs-12">
-            <Header />
-            <ClassCardList />
+          <div className="row">
+            {" "}
+            <div className="col-xs-12 no-padding">
+              <Header />
+            </div>
+          </div>
+        </div>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-xs-9">
+              <ClassCardList />
+            </div>
+            <div className="col-xs-3"></div>
           </div>
         </div>
         <AppContents>

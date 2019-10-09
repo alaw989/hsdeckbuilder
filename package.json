@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^3.4.1",
     "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
     "ramda": "^0.25.0",
     "rapidapi-connect": "^0.0.6",
     "react": "^16.10.2",
+    "react-bootstrap": "^1.0.0-beta.14",
     "react-bootstrap-typeahead": "^2.0.0",
     "react-dom": "^16.10.2",
     "react-scripts": "1.0.17",

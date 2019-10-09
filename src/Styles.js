@@ -6,4 +6,12 @@ const Banner = styled.div`
   background-size: cover;
 `;
 
-export { Banner };
+const DeckBuilderCardGrid = styled.div`
+    ul {
+        list-style-type: none;
+        display: flex;
+        flex-wrap: wrap;
+    }
+`;
+
+export { Banner, DeckBuilderCardGrid };
