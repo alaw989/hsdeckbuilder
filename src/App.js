@@ -6,7 +6,6 @@ import CardImg from "./CardImg.js";
 import CardTitle from "./CardTitle.js";
 import CardContent from "./CardContent.js";
 import styled from "styled-components";
-import DeckList from "./DeckList.js";
 import { Header } from "./Header";
 import { ClassCardList } from "./ClassCardList";
 
@@ -135,14 +134,8 @@ class App extends Component {
             </div>
           </div>
         </div>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-xs-9">
-              <ClassCardList />
-            </div>
-            <div className="col-xs-3"></div>
-          </div>
-        </div>
+        
+        <ClassCardList />
         <AppContents>
           <AsyncTypeahead
             onSearch={card => {
@@ -194,7 +187,7 @@ class App extends Component {
           <Add_Button onClick={this.handleButtonClick}>Add To Deck</Add_Button>
         </AppContents>{" "}
         <AppDeckList>
-          <DeckList card={this.state.items} />
+          
         </AppDeckList>
       </div>
     );

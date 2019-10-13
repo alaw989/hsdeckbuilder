@@ -1,126 +1,114 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import unirest from "unirest";
 import { DeckBuilderCardGrid } from "./Styles";
 import axios from "axios";
+import { CardListContext } from "./CardListContext";
+import { DeckList } from "./DeckList";
 
-
+const cardlist = [];
 
 function ClassCardList() {
   const [warlockCards, setCards] = useState({
-    warlock: []
+    warlock: [
+      {
+        image: "",
+        name: "",
+        cardSetId: "",
+        cropImage: ""
+      }
+    ]
   });
 
-
-  useEffect(() => {
-    axios.get('https://cors-anywhere.herokuapp.com/https://api.hearthstonejson.com/v1/25770/enUS/cards.json')
-    .then(function (response) {
-      // handle success
-      console.log(response.data);
-      const filtered = response.data.filter(x => 
-        // console.log(x.set)
-        x.cardClass == "WARLOCK" &&
-        x.set !== "TGT" &&
-        x.set !== "GVG" &&
-        x.type !== "HERO"  &&
-        x.set !== "NAXX" &&
-        x.set !== "LOE" &&
-        x.set !== "KARA" &&
-        x.type !== "HERO_SKINS" && 
-        x.set !== "BRM" &&
-        x.set !== "ICECROWN" &&
-        x.set !== "UNGORO" &&
-        x.set !== "GANGS" &&
-        x.type !== "ENCHANTMENT" &&
-        x.set !== "OG" && 
-        x.set !== "TAVERNS_OF_TIME"
-
-        
-       
-
-        // x.set !== "Credits" &&
-        // x.set !== "Hall of Fame" &&
-        // x.set !== "Hero Skins" &&
-        // x.set !== "Missions" &&
-        // x.set !== "Tavern Brawl" &&
-        // x.set !== "Kobolds & Catacombs" &&
-        // x.set !== "Whispers of the Old Gods" &&
-        // x.set !== "Journey to Un'Goro" &&
-        // x.set !== "The League of Explorers" &&
-        // x.set !== "Knights of the Frozen Throne" &&
-        // x.set !== "The Grand Tournament" &&
-        // x.set !== "Mean Streets of Gadgetzan" &&
-        // x.set !== "One Night in Karazhan" &&
-        // x.set !== "Goblins vs Gnomes" &&
-        // x.type !== "Hero" &&
-        // x.collectible === true
-        )
-        console.log("warlock", filtered)
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
-    });
+  const [warlockList, setWarlockList] = useState({
+    cropImage: null
   });
 
-//   useEffect(() => {
-//     const cardURL = `https://api.hearthstonejson.com/v1/`;
-//     unirest
-//       .get(cardURL)
-//       .header({
-//         "x-rapidapi-host": "omgvamp-hearthstone-v1.p.rapidapi.com",
-//         "x-rapidapi-key": "l8lYKhEqKMmshGwKXzi1ElRhojGwp1Dn8YQjsnQRkDZQyPMIdV"
-//       })
-//       .end(result => {
-//         if (result.error) {
-//           console.log("GET response", result.error);
-//         } else {
-//           console.log("GET response", result.body);
-//           const filtered = result.body.filter(
-//             x =>
-              // x.set !== "Credits" &&
-              // x.set !== "Hall of Fame" &&
-              // x.set !== "Hero Skins" &&
-              // x.set !== "Missions" &&
-              // x.set !== "Tavern Brawl" &&
-              // x.set !== "Kobolds & Catacombs" &&
-              // x.set !== "Whispers of the Old Gods" &&
-              // x.set !== "Journey to Un'Goro" &&
-              // x.set !== "The League of Explorers" &&
-              // x.set !== "Knights of the Frozen Throne" &&
-              // x.set !== "The Grand Tournament" &&
-              // x.set !== "Mean Streets of Gadgetzan" &&
-              // x.set !== "One Night in Karazhan" &&
-              // x.set !== "Goblins vs Gnomes" &&
-              // x.type !== "Hero" &&
-              // x.collectible === true
-//           );
-//           setCards({
-//             warlock: filtered
-//           });
-//         }
-//       });
-//   }, []);
+  function getData() {
+    // console.log("cardlist:", cardlist);
+    // setWarlockList({
+    //   cropImage: cardlist
+    // });
 
-//   console.log(warlockCards.warlock);
+    axios
+      .get(
+        "https://us.api.blizzard.com/hearthstone/cards?locale=en_US&class=warlock&access_token=USP8WI2hZBcOJHns54gl80cvb3ReevG8UN"
+      )
+      .then(function(response) {
+        // handle success
+        // console.log(response.data.cards);
+        const mapped = response.data.cards
+          .filter(
+            x =>
+              x.cardSetId !== 17 &&
+              x.cardSetId !== 21 &&
+              x.cardSetId !== 1004 &&
+              x.cardSetId !== 4 &&
+              x.cardSetId !== 23 &&
+              x.cardSetId !== 20 &&
+              x.cardSetId !== 1001 &&
+              x.cardSetId !== 27 &&
+              x.cardSetId !== 13 &&
+              x.cardSetId !== 15 &&
+              x.cardSetId !== 25 &&
+              x.cardSetId !== 14 &&
+              x.cardSetId !== 12
+          )
+          .map(x => {
+            return {
+              image: x.image,
+              name: x.name,
+              cardSetId: x.cardSetId,
+              cropImage: x.cropImage
+            };
+          });
 
-  const doSomething = () => {
-      console.log('hey');
+        // console.log(mapped);
+
+        setCards({
+          warlock: mapped
+        });
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function() {
+        // always executed
+      });
   }
 
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const doSomething = (x, index) => {
+    // console.log(index);
+    cardlist.push(x.cropImage);
+    getData();
+  };
+
   return (
-    <DeckBuilderCardGrid>
-      <ul>
-        {" "}
-        {warlockCards.warlock.map((x, index) => (
-          <li key={index} onClick={doSomething}>
-            <img src={x.img} />
-          </li>
-        ))}{" "}
-      </ul>
-    </DeckBuilderCardGrid>
+    <div className="container-fluid cardlist-container">
+      <div className="row">
+        <div className="col-xs-9">
+          <DeckBuilderCardGrid>
+            <ul>
+              {" "}
+              {warlockCards.warlock.map((x, index) => (
+                <li key={index} onClick={() => doSomething(x, index)}>
+                  <img src={x.image} />
+                </li>
+              ))}{" "}
+            </ul>
+          </DeckBuilderCardGrid>
+        </div>
+        <div className="col-xs-3">
+          <CardListContext.Provider value={cardlist}>
+            <DeckList />
+          </CardListContext.Provider>
+        </div>
+      </div>
+    </div>
   );
 }
 

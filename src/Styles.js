@@ -12,6 +12,10 @@ const DeckBuilderCardGrid = styled.div`
         display: flex;
         flex-wrap: wrap;
     }
+
+    ul li img {
+        width: 250px;
+    }
 `;
 
 export { Banner, DeckBuilderCardGrid };
