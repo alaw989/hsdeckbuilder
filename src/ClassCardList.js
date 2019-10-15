@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
-import unirest from "unirest";
+import React, { useState, useEffect } from "react";
 import { DeckBuilderCardGrid } from "./Styles";
 import axios from "axios";
 import { CardListContext } from "./CardListContext";
 import { DeckList } from "./DeckList";
 
-const cardlist = [];
+const cardcrop_image = [];
+const card_id = [];
+
+const card_obj = [];
+
+
 
 function ClassCardList() {
   const [warlockCards, setCards] = useState({
@@ -14,28 +18,22 @@ function ClassCardList() {
         image: "",
         name: "",
         cardSetId: "",
-        cropImage: ""
+        cropImage: "",
+        id: ""
       }
     ]
   });
 
-  const [warlockList, setWarlockList] = useState({
-    cropImage: null
-  });
+  const [warlockList, setWarlockList] = useState(card_obj);
 
   function getData() {
-    // console.log("cardlist:", cardlist);
-    // setWarlockList({
-    //   cropImage: cardlist
-    // });
-
     axios
       .get(
-        "https://us.api.blizzard.com/hearthstone/cards?locale=en_US&class=warlock&access_token=USP8WI2hZBcOJHns54gl80cvb3ReevG8UN"
+        "https://us.api.blizzard.com/hearthstone/cards?locale=en_US&class=warlock&access_token=USIboKFFPvWa29Rc1QJPfCCzTEMV0xOQY8"
       )
       .then(function(response) {
         // handle success
-        // console.log(response.data.cards);
+        console.log(response.data.cards);
         const mapped = response.data.cards
           .filter(
             x =>
@@ -58,7 +56,8 @@ function ClassCardList() {
               image: x.image,
               name: x.name,
               cardSetId: x.cardSetId,
-              cropImage: x.cropImage
+              cropImage: x.cropImage,
+              id: x.id
             };
           });
 
@@ -82,9 +81,15 @@ function ClassCardList() {
   }, []);
 
   const doSomething = (x, index) => {
-    // console.log(index);
-    cardlist.push(x.cropImage);
-    getData();
+    const obj = {};
+    obj.cropImage = x.cropImage;
+    obj.id = x.id; 
+    card_obj.push(obj)
+
+    setWarlockList({
+      cropImage: cardcrop_image,
+      id: card_id
+    });
   };
 
   return (
@@ -103,7 +108,7 @@ function ClassCardList() {
           </DeckBuilderCardGrid>
         </div>
         <div className="col-xs-3">
-          <CardListContext.Provider value={cardlist}>
+          <CardListContext.Provider value={card_obj}>
             <DeckList />
           </CardListContext.Provider>
         </div>
