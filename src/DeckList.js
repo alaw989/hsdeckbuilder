@@ -6,13 +6,36 @@ const DeckList = () => {
   // if (data.cropImage === undefined) {
   //   return <div />;
   // }
- 
-  console.log(data);
+  const idArray = [];
 
-  // const cropImage = data.cropImage; 
-  // const id = data.id;
+  data.map(x => {
+    idArray.push(x.id);
+  });
 
+  // console.log(idArray);
+  function count() {
 
+    idArray.sort();
+
+    var current = null;
+    var cnt = 0;
+    for (var i = 0; i < idArray.length; i++) {
+        if (idArray[i] != current) {
+            if (cnt > 0) {
+                console.log(current + ' comes --> ' + cnt + ' times<br>');
+            }
+            current = idArray[i];
+            cnt = 1;
+        } else {
+            cnt++;
+        }
+    }
+    if (cnt > 0) {
+        console.log(current + ' comes --> ' + cnt + ' times');
+    }
+}
+
+count();
 
   return (
     <ul className={"test"}>

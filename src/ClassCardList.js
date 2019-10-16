@@ -4,12 +4,8 @@ import axios from "axios";
 import { CardListContext } from "./CardListContext";
 import { DeckList } from "./DeckList";
 
-const cardcrop_image = [];
-const card_id = [];
 
 const card_obj = [];
-
-
 
 function ClassCardList() {
   const [warlockCards, setCards] = useState({
@@ -24,12 +20,12 @@ function ClassCardList() {
     ]
   });
 
-  const [warlockList, setWarlockList] = useState(card_obj);
+  const [warlockList, setWarlockList] = useState({});
 
   function getData() {
     axios
       .get(
-        "https://us.api.blizzard.com/hearthstone/cards?locale=en_US&class=warlock&access_token=USIboKFFPvWa29Rc1QJPfCCzTEMV0xOQY8"
+        "https://us.api.blizzard.com/hearthstone/cards?locale=en_US&class=warlock&access_token=US3JhjKHMYF3SZGRxiHdAuzAqo7pzquZRU"
       )
       .then(function(response) {
         // handle success
@@ -86,11 +82,9 @@ function ClassCardList() {
     obj.id = x.id; 
     card_obj.push(obj)
 
-    setWarlockList({
-      cropImage: cardcrop_image,
-      id: card_id
-    });
+    setWarlockList({card_obj});
   };
+
 
   return (
     <div className="container-fluid cardlist-container">
