@@ -10,17 +10,17 @@ See: .planning/PROJECT.md (updated 2026-02-06)
 ## Current Position
 
 Phase: 2 of 4 (Deck Builder MVP)
-Plan: 2 of 5 in current phase
+Plan: 3 of 5 in current phase
 Status: In progress
-Last activity: 2026-02-07 — Completed deck validation logic with TDD
+Last activity: 2026-02-07 — Completed deck code encode/decode utilities
 
-Progress: [████░░░░░░░] 40%
+Progress: [█████░░░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: 3m
+- Total plans completed: 6
+- Average duration: 2.5m
 - Total execution time: 0.25 hours
 
 **By Phase:**
@@ -28,10 +28,10 @@ Progress: [████░░░░░░░] 40%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01    | 3     | 10m   | 3m       |
-| 02    | 2     | 5m    | 2.5m     |
+| 02    | 3     | 6m    | 2m       |
 
 **Recent Trend:**
-- Last 5 plans: 3m
+- Last 5 plans: 2.4m
 - Trend: Consistent fast execution
 
 *Updated after each plan completion*
@@ -57,6 +57,9 @@ Recent decisions affecting current work:
 12. **Vitest with jsdom for testing** - Chose Vitest over Jest for better Vite integration, jsdom environment for DOM-like testing (plan 02-02)
 13. **Pure validation functions** - Separated business logic from Vue components for testability and reusability (plan 02-02)
 14. **Computed properties for validation reactivity** - DeckValidation component uses computed instead of watch for automatic updates (plan 02-02)
+15. **@firestone-hs/deckstrings@2.2.8 for deck code handling** - Hearthstone deckstring library for base64 + varint encoding/decoding (plan 02-03)
+16. **Hero DBF ID mappings hardcoded** - Static mappings for all 11 classes to avoid external API dependency (plan 02-03)
+17. **Error object return pattern** - Utilities return `{ data, error }` objects for consistent error handling (plan 02-03)
 
 ### Pending Todos
 
@@ -68,6 +71,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-07 05:28 UTC
-Stopped at: Completed 02-02 - Deck validation logic
+Last session: 2026-02-07 05:31 UTC
+Stopped at: Completed 02-03 - Deck code encode/decode utilities
 Resume file: None
