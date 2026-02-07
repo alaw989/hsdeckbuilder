@@ -1,8 +1,9 @@
 <script setup>
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, onMounted } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import { useDeckBuilder } from '@/Composables/useDeckBuilder';
 import { importDeckCode, exportDeckCode } from '@/Utils/deckCode';
+import { generateShareUrl, parseSharedDeckFromUrl } from '@/Utils/deckShare';
 import { validateDeck } from '@/Utils/deckValidation';
 import SearchInput from '@/Components/SearchInput.vue';
 import FilterPanel from '@/Components/FilterPanel.vue';
@@ -13,6 +14,9 @@ import DeckStats from '@/Components/DeckStats.vue';
 import CardTooltip from '@/Components/CardTooltip.vue';
 import DeckCodeImport from '@/Components/DeckCodeImport.vue';
 import DeckCodeExport from '@/Components/DeckCodeExport.vue';
+import ShareDeckModal from '@/Components/ShareDeckModal.vue';
+import SavedDecksModal from '@/Components/SavedDecksModal.vue';
+import { useDeckStorage } from '@/Composables/useDeckStorage';
 
 const props = defineProps({
   cards: {
@@ -23,6 +27,10 @@ const props = defineProps({
   initialClass: {
     type: String,
     default: 'NEUTRAL'
+  },
+  sharedDeckCode: {
+    type: String,
+    default: null
   }
 });
 
@@ -106,6 +114,124 @@ function handleCopyDeckCode(code) {
   // Optional: track analytics or show notification
   console.log('Deck code copied:', code);
 }
+
+// Share deck functionality
+const showShareModal = ref(false);
+const shareUrl = ref('');
+const sharedDeck = ref(null);
+
+// Saved decks functionality
+const showSavedDecksModal = ref(false);
+const { saveDeck, loadDeck, deleteDeck } = useDeckStorage();
+
+/**
+ * Handle save deck button click
+ */
+function handleSaveDeck() {
+  if (!isValidDeck.value) {
+    alert('Please build a valid deck (30 cards, correct class) before saving.');
+    return;
+  }
+
+  // Prompt user for deck name
+  const defaultName = `Untitled ${selectedClass.value} Deck`;
+  const deckName = window.prompt('Enter a name for your deck:', defaultName);
+
+  if (deckName === null) {
+    // User cancelled
+    return;
+  }
+
+  // Use default if user entered empty string
+  const finalName = deckName.trim() || defaultName;
+
+  // Save deck
+  const { data, error } = saveDeck({
+    cards: deckCards.value,
+    class: selectedClass.value,
+    name: finalName
+  });
+
+  if (error) {
+    alert(`Failed to save deck: ${error}`);
+    return;
+  }
+
+  alert(`Deck "${finalName}" saved successfully!`);
+}
+
+/**
+ * Handle load deck event from SavedDecksModal
+ */
+function handleLoadDeck(deckData) {
+  clearDeck();
+
+  // Add each card to the deck
+  for (const item of deckData.cards) {
+    for (let i = 0; i < item.count; i++) {
+      addCard(item.card);
+    }
+  }
+
+  // Update class
+  selectedClass.value = deckData.class;
+
+  alert(`Loaded "${deckData.name}" (${deckData.class} deck)`);
+}
+
+/**
+ * Handle delete deck event from SavedDecksModal
+ */
+function handleDeleteDeck(deckId) {
+  // Deletion already handled in modal
+  console.log('Deck deleted:', deckId);
+}
+
+const shareUrlComputed = computed(() => {
+  if (!isValidDeck.value) return '';
+
+  const result = generateShareUrl(
+    deckCards.value,
+    selectedClass.value,
+    window.location.origin
+  );
+
+  return result.url || '';
+});
+
+function openShareModal() {
+  if (!isValidDeck.value) return;
+  shareUrl.value = shareUrlComputed.value;
+  showShareModal.value = true;
+}
+
+function closeShareModal() {
+  showShareModal.value = false;
+}
+
+function clearSharedDeck() {
+  sharedDeck.value = null;
+  clearDeck();
+}
+
+// Load shared deck on mount
+onMounted(() => {
+  if (props.sharedDeckCode) {
+    handleImportDeck(props.sharedDeckCode);
+
+    // Track shared deck info
+    sharedDeck.value = {
+      deckCode: props.sharedDeckCode,
+      class: selectedClass.value,
+      cards: [...deckCards.value]
+    };
+
+    // Clear URL parameter without reloading
+    const url = new URL(window.location);
+    url.searchParams.delete('deck');
+    window.history.replaceState({}, '', url);
+  }
+});
 
 // Card search/filter state
 const searchQuery = ref('');
@@ -273,17 +399,34 @@ function selectCard(card) {
 
         <!-- Left panel: Card selection (2/3 width) -->
         <div class="lg:col-span-2 space-y-4">
-          <!-- Import/Export buttons -->
-          <div class="flex space-x-3">
-            <div class="flex-1">
-              <DeckCodeImport @import-deck="handleImportDeck" />
+          <!-- Import/Export/Save/Load buttons -->
+          <div class="grid grid-cols-2 gap-3">
+            <div class="flex space-x-3">
+              <div class="flex-1">
+                <DeckCodeImport @import-deck="handleImportDeck" />
+              </div>
+              <div class="flex-1">
+                <DeckCodeExport
+                  :deck-code="deckCode"
+                  :is-disabled="!isValidDeck"
+                  @copy-deck-code="handleCopyDeckCode"
+                />
+              </div>
             </div>
-            <div class="flex-1">
-              <DeckCodeExport
-                :deck-code="deckCode"
-                :is-disabled="!isValidDeck"
-                @copy-deck-code="handleCopyDeckCode"
-              />
+            <div class="flex space-x-3">
+              <button
+                @click="handleSaveDeck"
+                class="flex-1 rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                :disabled="!isValidDeck"
+              >
+                Save Deck
+              </button>
+              <button
+                @click="showSavedDecksModal = true"
+                class="flex-1 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Load Decks
+              </button>
             </div>
           </div>
 
@@ -359,6 +502,14 @@ function selectCard(card) {
       :x="tooltipPosition.x"
       :y="tooltipPosition.y"
       @close="hideTooltip"
+    />
+
+    <!-- Saved Decks Modal -->
+    <SavedDecksModal
+      :show="showSavedDecksModal"
+      @close="showSavedDecksModal = false"
+      @load-deck="handleLoadDeck"
+      @delete-deck="handleDeleteDeck"
     />
   </div>
 </template>
