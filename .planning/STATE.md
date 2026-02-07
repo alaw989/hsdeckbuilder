@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-06)
 ## Current Position
 
 Phase: 1 of 4 (Foundation & Card Data)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-02-07 — Completed Laravel 12 + Vue 3 + Inertia foundation
+Last activity: 2026-02-07 — Completed Hearthstone card data API and caching layer
 
-Progress: [██░░░░░░░░░] 33%
+Progress: [████░░░░░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
+- Total plans completed: 2
 - Average duration: 3m
-- Total execution time: 0.05 hours
+- Total execution time: 0.10 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01    | 1     | 3     | 3m       |
+| 01    | 2     | 3     | 3m       |
 
 **Recent Trend:**
 - Last 5 plans: 3m
-- Trend: Fast start
+- Trend: Consistent fast execution
 
 *Updated after each plan completion*
 
@@ -45,6 +45,8 @@ Recent decisions affecting current work:
 1. **Laravel 12 instead of 11** - Accepted latest stable version (backward compatible)
 2. **Vite 7.3.1 with --legacy-peer-deps** - Resolved peer dependency conflict with @vitejs/plugin-vue
 3. **Replaced React 16 app** - Complete migration to Laravel + Vue 3 + Inertia stack
+4. **File cache as fallback for Redis** - Redis not available on dev system, using file cache (Redis configured for production)
+5. **Hardcoded standard sets list** - Standard format sets in HearthstoneService (will need updates every 4 months)
 
 ### Pending Todos
 
@@ -56,6 +58,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-07 04:33 UTC
-Stopped at: Completed 01-01 - Laravel + Vue 3 + Inertia foundation
+Last session: 2026-02-07 04:43 UTC
+Stopped at: Completed 01-02 - Hearthstone card data API and caching
 Resume file: None
