@@ -74,6 +74,35 @@ export function getRarityColor(rarity) {
 }
 
 /**
+ * Calculate USD equivalent cost of dust
+ * Based on pack value: ~$43 for 3000 dust (minus ~400 average duplicate value)
+ * USD per dust: ~$0.0143
+ *
+ * @param {number} dustCost - Total dust cost
+ * @returns {string} Formatted USD string (e.g., "$12.45")
+ */
+export function calculateUsdCost(dustCost) {
+  const USD_PER_DUST = 0.0143; // Based on pack economics
+  const usdCost = dustCost * USD_PER_DUST;
+  return `$${usdCost.toFixed(2)}`;
+}
+
+/**
+ * Calculate dust cost per rarity breakdown with USD values
+ *
+ * @param {Array} deckCards - Array of {card, count}
+ * @returns {Object} { total, counts, byRarity, usdTotal }
+ */
+export function calculateDustCostWithUsd(deckCards) {
+  const baseResult = calculateDustCost(deckCards);
+
+  return {
+    ...baseResult,
+    usdTotal: calculateUsdCost(baseResult.total)
+  };
+}
+
+/**
  * Get rarity border color
  */
 export function getRarityBorderColor(rarity) {
