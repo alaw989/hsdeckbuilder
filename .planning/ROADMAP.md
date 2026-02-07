@@ -34,12 +34,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 4. User can select deck format (Standard/Wild/Twist) and see only valid cards for that format
 5. Card data loads quickly (< 3 seconds) and is cached to avoid repeated API calls
 
-**Plans**: TBD
+**Plans:** 3 plans in 3 waves
 
 Plans:
-- [ ] 01-01: Laravel 11 + Vue 3 + Inertia.js project setup with Tailwind CSS
-- [ ] 01-02: Blizzard API integration with Redis caching layer
-- [ ] 01-03: Card search UI with autocomplete and multi-filter capabilities
+- [ ] 01-01-PLAN.md — Laravel 11 + Vue 3 + Inertia.js project setup with Tailwind CSS (Wave 1)
+- [ ] 01-02-PLAN.md — HearthstoneJSON API integration with Redis caching layer (Wave 2)
+- [ ] 01-03-PLAN.md — Card search UI with autocomplete and multi-filter capabilities (Wave 3)
 
 ### Phase 2: Deck Builder MVP
 
