@@ -18,6 +18,7 @@ import ShareDeckModal from '@/Components/ShareDeckModal.vue';
 import SavedDecksModal from '@/Components/SavedDecksModal.vue';
 import ConfirmCloneModal from '@/Components/ConfirmCloneModal.vue';
 import AdSenseBanner from '@/Components/Ads/AdSenseBanner.vue';
+import AmazonCardPacks from '@/Components/Affiliates/AmazonCardPacks.vue';
 import { useDeckStorage } from '@/Composables/useDeckStorage';
 import { serializeDeckForStorage } from '@/Utils/deckStorage';
 
@@ -580,6 +581,11 @@ function selectCard(card) {
             <!-- Deck stats -->
             <div class="bg-white rounded-lg shadow p-4">
               <DeckStats :deck-cards="deckCards" />
+            </div>
+
+            <!-- Amazon affiliate links -->
+            <div class="bg-white rounded-lg shadow p-4">
+              <AmazonCardPacks />
             </div>
 
             <!-- Sidebar ad -->

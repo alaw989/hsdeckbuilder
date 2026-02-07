@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { Bar } from 'vue-chart-3';
 import { Chart, registerables } from 'chart.js';
-import { calculateDustCost, getRarityColor } from '../Utils/dustCalculation';
+import { calculateDustCost, getRarityColor, calculateUsdCost } from '../Utils/dustCalculation';
 
 Chart.register(...registerables);
 
@@ -74,6 +74,9 @@ const chartOptions = {
 // Dust cost calculation
 const dustCost = computed(() => calculateDustCost(props.deckCards));
 
+// USD cost calculation
+const usdCost = computed(() => calculateUsdCost(dustCost.value.total));
+
 const rarityBreakdown = computed(() => {
   return [
     { rarity: 'Legendary', count: dustCost.value.counts.LEGENDARY, dust: dustCost.value.byRarity.LEGENDARY },
@@ -117,6 +120,12 @@ const totalCards = computed(() =>
             </svg>
             <span class="text-lg font-bold text-amber-900">{{ dustCost.total.toLocaleString() }}</span>
           </div>
+        </div>
+
+        <!-- USD value -->
+        <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+          <span class="text-sm font-medium text-green-900">Estimated USD Value</span>
+          <span class="text-lg font-bold text-green-900">{{ usdCost }}</span>
         </div>
 
         <!-- By rarity -->
