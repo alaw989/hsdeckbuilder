@@ -56,13 +56,13 @@ Plans:
 4. User can export their deck via Blizzard deck code string
 5. User can see mana curve chart, dust cost breakdown, and card tooltips for their deck
 
-**Plans**: TBD
+**Plans:** 4 plans in 3 waves
 
 Plans:
-- [ ] 02-01: List-based deck builder UI with add/remove card functionality
-- [ ] 02-02: Deck validation logic (30 cards, class restrictions, format validation)
-- [ ] 02-03: Deck code import/export using Blizzard deck string format
-- [ ] 02-04: Visual analytics (mana curve chart, dust cost calculator, card tooltips)
+- [ ] 02-01-PLAN.md — List-based deck builder UI with add/remove card functionality (Wave 1)
+- [ ] 02-02-PLAN.md — Deck validation logic with TDD (30 cards, class restrictions, duplicate limits) (Wave 2)
+- [ ] 02-03-PLAN.md — Deck code import/export using Blizzard deck string format (Wave 3)
+- [ ] 02-04-PLAN.md — Visual analytics (mana curve chart, dust cost calculator, card tooltips) (Wave 3)
 
 ### Phase 3: Deck Sharing & Persistence
 
@@ -115,7 +115,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Card Data | 0/3 | Not started | - |
+| 1. Foundation & Card Data | 3/3 | Phase complete | 2026-02-07 |
 | 2. Deck Builder MVP | 0/4 | Not started | - |
 | 3. Deck Sharing & Persistence | 0/3 | Not started | - |
 | 4. Monetization & Platform Polish | 0/3 | Not started | - |
