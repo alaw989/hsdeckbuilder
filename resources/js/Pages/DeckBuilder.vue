@@ -2,6 +2,8 @@
 import { ref, reactive, computed } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import { useDeckBuilder } from '@/Composables/useDeckBuilder';
+import { importDeckCode, exportDeckCode } from '@/Utils/deckCode';
+import { validateDeck } from '@/Utils/deckValidation';
 import SearchInput from '@/Components/SearchInput.vue';
 import FilterPanel from '@/Components/FilterPanel.vue';
 import CardGrid from '@/Components/CardGrid.vue';
@@ -9,6 +11,8 @@ import DeckList from '@/Components/DeckList.vue';
 import DeckValidation from '@/Components/DeckValidation.vue';
 import DeckStats from '@/Components/DeckStats.vue';
 import CardTooltip from '@/Components/CardTooltip.vue';
+import DeckCodeImport from '@/Components/DeckCodeImport.vue';
+import DeckCodeExport from '@/Components/DeckCodeExport.vue';
 
 const props = defineProps({
   cards: {
@@ -30,6 +34,7 @@ const {
   addCard,
   removeCard,
   setCardCount,
+  clearDeck,
   getCardsByManaCost
 } = useDeckBuilder(props.initialClass);
 
@@ -44,6 +49,62 @@ function showTooltip(event, card) {
 
 function hideTooltip() {
   hoveredCard.value = null;
+}
+
+// Deck code import/export functionality
+const validation = computed(() =>
+  validateDeck(deckCards, selectedClass.value)
+);
+
+const isValidDeck = computed(() => validation.value.isValid);
+
+const deckCode = computed(() => {
+  if (!isValidDeck.value) return '';
+
+  const result = exportDeckCode(
+    deckCards,
+    selectedClass.value,
+    'wild' // Default to wild format
+  );
+
+  return result.deckCode || '';
+});
+
+// Build dbfId to card map for import
+const cardDbfMap = computed(() => {
+  const map = {};
+  for (const card of props.cards) {
+    map[card.dbfId] = card;
+  }
+  return map;
+});
+
+function handleImportDeck(deckCodeString) {
+  const result = importDeckCode(deckCodeString, cardDbfMap.value);
+
+  if (result.error) {
+    alert(result.error);
+    return;
+  }
+
+  // Clear current deck and import cards
+  clearDeck();
+
+  for (const item of result.cards) {
+    for (let i = 0; i < item.count; i++) {
+      addCard(item.card);
+    }
+  }
+
+  // Update class if different
+  selectedClass.value = result.class;
+
+  alert(`Imported ${result.cards.length} cards (${result.class} deck)`);
+}
+
+function handleCopyDeckCode(code) {
+  // Optional: track analytics or show notification
+  console.log('Deck code copied:', code);
 }
 
 // Card search/filter state
@@ -212,6 +273,20 @@ function selectCard(card) {
 
         <!-- Left panel: Card selection (2/3 width) -->
         <div class="lg:col-span-2 space-y-4">
+          <!-- Import/Export buttons -->
+          <div class="flex space-x-3">
+            <div class="flex-1">
+              <DeckCodeImport @import-deck="handleImportDeck" />
+            </div>
+            <div class="flex-1">
+              <DeckCodeExport
+                :deck-code="deckCode"
+                :is-disabled="!isValidDeck"
+                @copy-deck-code="handleCopyDeckCode"
+              />
+            </div>
+          </div>
+
           <!-- Search and filters -->
           <div class="bg-white rounded-lg shadow p-4">
             <SearchInput
