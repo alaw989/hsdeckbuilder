@@ -16,7 +16,9 @@ import DeckCodeImport from '@/Components/DeckCodeImport.vue';
 import DeckCodeExport from '@/Components/DeckCodeExport.vue';
 import ShareDeckModal from '@/Components/ShareDeckModal.vue';
 import SavedDecksModal from '@/Components/SavedDecksModal.vue';
+import ConfirmCloneModal from '@/Components/ConfirmCloneModal.vue';
 import { useDeckStorage } from '@/Composables/useDeckStorage';
+import { serializeDeckForStorage } from '@/Utils/deckStorage';
 
 const props = defineProps({
   cards: {
@@ -122,6 +124,8 @@ const sharedDeck = ref(null);
 
 // Saved decks functionality
 const showSavedDecksModal = ref(false);
+const showCloneModal = ref(false);
+const cloneSuggestedName = ref('');
 const { saveDeck, loadDeck, deleteDeck } = useDeckStorage();
 
 /**
@@ -185,6 +189,50 @@ function handleLoadDeck(deckData) {
 function handleDeleteDeck(deckId) {
   // Deletion already handled in modal
   console.log('Deck deleted:', deckId);
+}
+
+/**
+ * Open clone modal for shared deck
+ */
+function openCloneModal() {
+  cloneSuggestedName.value = `Clone of ${selectedClass.value} Deck`;
+  showCloneModal.value = true;
+}
+
+/**
+ * Handle confirm clone from modal
+ */
+function handleConfirmClone({ name }) {
+  // Serialize deck for storage
+  const { data: serialized, error: serializeError } = serializeDeckForStorage(
+    deckCards.value,
+    selectedClass.value,
+    name
+  );
+
+  if (serializeError) {
+    alert(`Failed to clone deck: ${serializeError}`);
+    return;
+  }
+
+  // Save deck to LocalStorage
+  const { data, error } = saveDeck({
+    deckCards: deckCards.value,
+    deckClass: selectedClass.value,
+    deckName: name
+  });
+
+  if (error) {
+    alert(`Failed to clone deck: ${error}`);
+    return;
+  }
+
+  // Clear shared deck flag - now editing local copy
+  sharedDeck.value = null;
+
+  // Close modal and show success
+  showCloneModal.value = false;
+  alert(`Deck "${name}" cloned successfully!`);
 }
 
 const shareUrlComputed = computed(() => {
@@ -386,10 +434,54 @@ function selectCard(card) {
     <!-- Header -->
     <div class="bg-white shadow">
       <div class="max-w-7xl mx-auto px-4 py-4">
-        <h1 class="text-2xl font-bold text-gray-900">Deck Builder</h1>
-        <p class="text-sm text-gray-500 mt-1">
-          Build your deck: {{ deckCount }}/30 cards
-        </p>
+        <div class="flex justify-between items-center">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">Deck Builder</h1>
+            <p class="text-sm text-gray-500 mt-1">
+              Build your deck: {{ deckCount }}/30 cards
+            </p>
+          </div>
+          <button
+            @click="openShareModal"
+            class="rounded-md bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            :disabled="!isValidDeck"
+          >
+            Share Deck
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shared deck banner -->
+    <div
+      v-if="sharedDeck"
+      class="bg-blue-100 border-l-4 border-blue-500 p-4 mx-4 mt-4 rounded"
+    >
+      <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-sm font-medium text-blue-800">
+              Viewing a shared deck
+            </h3>
+            <p class="text-sm text-blue-700 mt-1">
+              {{ sharedDeck.class }} deck • {{ deckCount }} cards
+            </p>
+          </div>
+          <div class="flex space-x-3">
+            <button
+              @click="openCloneModal"
+              class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Clone to My Decks
+            </button>
+            <button
+              @click="clearSharedDeck"
+              class="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Start New Deck
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -510,6 +602,22 @@ function selectCard(card) {
       @close="showSavedDecksModal = false"
       @load-deck="handleLoadDeck"
       @delete-deck="handleDeleteDeck"
+    />
+
+    <!-- Share Deck Modal -->
+    <ShareDeckModal
+      :show="showShareModal"
+      :share-url="shareUrl"
+      :is-disabled="!isValidDeck"
+      @close="closeShareModal"
+    />
+
+    <!-- Confirm Clone Modal -->
+    <ConfirmCloneModal
+      :show="showCloneModal"
+      :suggested-name="cloneSuggestedName"
+      @close="showCloneModal = false"
+      @confirm="handleConfirmClone"
     />
   </div>
 </template>
