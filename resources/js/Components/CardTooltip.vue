@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 
 const props = defineProps({
   card: {
@@ -24,6 +24,13 @@ const emit = defineEmits(['close']);
 
 const tooltipRef = ref(null);
 const position = ref({ top: '0px', left: '0px' });
+const isMobile = ref(false);
+const showModal = ref(false);
+
+// Detect mobile
+const checkMobile = () => {
+    isMobile.value = typeof window !== 'undefined' && window.innerWidth < 768;
+}
 
 // Calculate position to keep tooltip in viewport
 const calculatedPosition = computed(() => {
@@ -77,17 +84,43 @@ function handleEscape(e) {
   }
 }
 
+function closeModal() {
+    showModal.value = false;
+    emit('close');
+}
+
+function handleBackdropClick(e) {
+    if (e.target === e.currentTarget) {
+        closeModal();
+    }
+}
+
+// Watch for card changes to show modal on mobile
+watch(() => props.show, (newVal) => {
+    if (newVal && isMobile.value) {
+        showModal.value = true;
+    }
+});
+
 onMounted(() => {
+  checkMobile();
+  if (typeof window !== 'undefined') {
+      window.addEventListener('resize', checkMobile);
+  }
   document.addEventListener('keydown', handleEscape);
 });
 
 onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', checkMobile);
+  }
   document.removeEventListener('keydown', handleEscape);
 });
 </script>
 
 <template>
   <Teleport to="body">
+    <!-- Desktop tooltip (existing behavior) -->
     <Transition
       enter-active-class="transition-opacity duration-200"
       enter-from-class="opacity-0"
@@ -95,7 +128,7 @@ onBeforeUnmount(() => {
       leave-active-class="transition-opacity duration-150"
       leave-from-class="opacity-100"
       leave-to-class="opacity-0">
-      <div v-if="show && card"
+      <div v-if="show && card && !isMobile"
            ref="tooltipRef"
            class="fixed z-50 pointer-events-none"
            :style="calculatedPosition">
@@ -115,6 +148,55 @@ onBeforeUnmount(() => {
               <span class="text-xs text-gray-300">{{ card.cardClass }}</span>
               <span class="text-gray-500">•</span>
               <span class="text-xs" :class="rarityColor">{{ card.rarity }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- Mobile modal -->
+    <Transition
+      enter-active-class="transition-opacity duration-200"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition-opacity duration-150"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0">
+      <div v-if="showModal && card && isMobile"
+           class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+           @click="handleBackdropClick">
+        <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full overflow-hidden relative">
+          <!-- Close button -->
+          <button
+            @click="closeModal"
+            class="absolute top-2 right-2 z-10 p-2 bg-black/50 rounded-full text-white hover:bg-black/70"
+            aria-label="Close">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+
+          <!-- Card image -->
+          <img
+            :src="`https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png`"
+            :alt="card.name"
+            class="w-full"
+          />
+
+          <!-- Card info -->
+          <div class="p-4 bg-gray-900 text-white">
+            <h3 class="text-lg font-semibold">{{ card.name }}</h3>
+            <div class="flex items-center justify-between mt-2 text-sm">
+              <span class="text-gray-300">{{ card.cardClass }}</span>
+              <span class="px-2 py-1 rounded text-xs font-medium"
+                    :class="{
+                      'bg-orange-500': card.rarity === 'LEGENDARY',
+                      'bg-purple-500': card.rarity === 'EPIC',
+                      'bg-blue-500': card.rarity === 'RARE',
+                      'bg-gray-500': ['FREE', 'COMMON'].includes(card.rarity)
+                    }">
+                {{ card.rarity }}
+              </span>
             </div>
           </div>
         </div>
