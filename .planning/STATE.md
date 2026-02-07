@@ -10,25 +10,25 @@ See: .planning/PROJECT.md (updated 2026-02-06)
 ## Current Position
 
 Phase: 2 of 4 (Deck Builder MVP)
-Plan: 5 of 5 in current phase
+Plan: 6 of 6 in current phase
 Status: Phase complete
-Last activity: 2026-02-07 — Completed deck code import/export UI components
+Last activity: 2026-02-07 — Completed card tooltip component with DeckStats integration
 
 Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
+- Total plans completed: 9
 - Average duration: 2.2m
-- Total execution time: 0.30 hours
+- Total execution time: 0.37 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01    | 3     | 10m   | 3m       |
-| 02    | 5     | 11m   | 2m       |
+| 02    | 6     | 14m   | 2.3m     |
 
 **Recent Trend:**
 - Last 5 plans: 2.2m
@@ -66,6 +66,9 @@ Recent decisions affecting current work:
 21. **Modal UI pattern with backdrop dismissal** - Fixed overlay with z-50 and click-outside-to-close for deck code import/export (plan 02-05)
 22. **Clipboard API with visual feedback** - Navigator.clipboard.writeText() with 2-second success timeout for copy confirmation (plan 02-05)
 23. **Computed deck code generation** - Export only enabled when deck validation passes (30 cards, correct class) (plan 02-05)
+24. **Vue 3 Teleport for tooltip rendering** - CardTooltip renders at document body root via Teleport for z-index isolation (plan 02-06)
+25. **Viewport-aware positioning calculation** - Tooltip position adjusts dynamically to prevent overflow on right/bottom/top edges (plan 02-06)
+26. **HearthstoneJSON CDN for card images** - 256x card images loaded from official CDN for tooltips (plan 02-06)
 
 ### Pending Todos
 
@@ -77,6 +80,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-07 05:52 UTC
-Stopped at: Completed 02-05 - Deck code import/export UI components
+Last session: 2026-02-07 05:51 UTC
+Stopped at: Completed 02-06 - Card tooltip with DeckStats integration
 Resume file: None
