@@ -41,7 +41,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **MON-01**: System displays banner ads on deck pages
 - [ ] **MON-02**: System displays affiliate links for card pack purchases
-- [ ] **MON-03]: System properly discloses affiliate relationships (FTC compliance)
+- [ ] **MON-03**: System properly discloses affiliate relationships (FTC compliance)
 
 ### Platform
 
@@ -116,37 +116,37 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | CORE-01 | Phase 1 | Pending |
 | CORE-02 | Phase 1 | Pending |
-| CORE-03 | Phase 1 | Pending |
-| CORE-04 | Phase 1 | Pending |
-| CORE-05 | Phase 1 | Pending |
-| CORE-06 | Phase 1 | Pending |
+| CORE-03 | Phase 2 | Pending |
+| CORE-04 | Phase 2 | Pending |
+| CORE-05 | Phase 2 | Pending |
+| CORE-06 | Phase 2 | Pending |
 | CORE-07 | Phase 1 | Pending |
 | CORE-08 | Phase 1 | Pending |
-| CORE-09 | Phase 1 | Pending |
-| CORE-10 | Phase 1 | Pending |
+| CORE-09 | Phase 2 | Pending |
+| CORE-10 | Phase 2 | Pending |
 | CORE-11 | Phase 1 | Pending |
-| VIS-01 | Phase 1 | Pending |
-| VIS-02 | Phase 1 | Pending |
-| VIS-03 | Phase 1 | Pending |
-| VIS-04 | Phase 1 | Pending |
-| DECK-01 | Phase 1 | Pending |
-| DECK-02 | Phase 1 | Pending |
-| DECK-03 | Phase 1 | Pending |
-| DECK-04 | Phase 2 | Pending |
-| DECK-05 | Phase 2 | Pending |
-| DECK-06 | Phase 2 | Pending |
-| MON-01 | Phase 1 | Pending |
-| MON-02 | Phase 1 | Pending |
-| MON-03 | Phase 1 | Pending |
-| PLAT-01 | Phase 1 | Pending |
-| PLAT-02 | Phase 1 | Pending |
+| VIS-01 | Phase 2 | Pending |
+| VIS-02 | Phase 2 | Pending |
+| VIS-03 | Phase 2 | Pending |
+| VIS-04 | Phase 2 | Pending |
+| DECK-01 | Phase 3 | Pending |
+| DECK-02 | Phase 3 | Pending |
+| DECK-03 | Phase 3 | Pending |
+| DECK-04 | Phase 3 | Pending |
+| DECK-05 | Phase 3 | Pending |
+| DECK-06 | Phase 3 | Pending |
+| MON-01 | Phase 4 | Pending |
+| MON-02 | Phase 4 | Pending |
+| MON-03 | Phase 4 | Pending |
+| PLAT-01 | Phase 4 | Pending |
+| PLAT-02 | Phase 4 | Pending |
 | PLAT-03 | Phase 1 | Pending |
 
 **Coverage:**
-- v1 requirements: 28 total
-- Mapped to phases: 0
-- Unmapped: 28 ⚠️
+- v1 requirements: 27 total
+- Mapped to phases: 27
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-02-06*
-*Last updated: 2026-02-06 after requirements definition*
+*Last updated: 2026-02-06 after roadmap creation*
