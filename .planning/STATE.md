@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-06)
 
 **Core value:** Deck builders can easily construct, optimize, and share Hearthstone decks with visual drag-and-drop—while discovering ways to improve their gameplay through analytics and expert guides.
-**Current focus:** Phase 3: Deck Sharing and Persistence
+**Current focus:** Phase 4: Monetization & Platform Polish
 
 ## Current Position
 
-Phase: 3 of 4 (Deck Sharing and Persistence)
-Plan: 2 of 3 in current phase
+Phase: 4 of 4 (Monetization & Platform Polish)
+Plan: 1 of 6 in current phase
 Status: In progress
-Last activity: 2026-02-07 — Completed URL-based deck sharing with query parameters
+Last activity: 2026-02-07 — Completed Google AdSense integration with responsive ads
 
-Progress: [████████░░] 80%
+Progress: [███░░░░░░] 30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 2.2m
-- Total execution time: 0.44 hours
+- Total plans completed: 13
+- Average duration: 2.1m
+- Total execution time: 0.45 hours
 
 **By Phase:**
 
@@ -30,9 +30,10 @@ Progress: [████████░░] 80%
 | 01    | 3     | 10m   | 3m       |
 | 02    | 6     | 14m   | 2.3m     |
 | 03    | 3     | 7m    | 2.3m     |
+| 04    | 1     | 2m    | 2m       |
 
 **Recent Trend:**
-- Last 5 plans: 2.1m
+- Last 5 plans: 2.2m
 - Trend: Consistent fast execution
 
 *Updated after each plan completion*
@@ -82,6 +83,11 @@ Recent decisions affecting current work:
 36. **No compression for deck codes in URLs** - Deck codes are 50-100 chars, well under URL limits (plan 03-02)
 37. **Shared deck state is informational only** - Shared deck banner shows context but doesn't auto-save to LocalStorage (plan 03-02)
 38. **Auto-clear URL parameter after loading shared deck** - Uses history.replaceState() to keep URLs clean (plan 03-02)
+39. **useAdSense composable for script initialization** - Vue 3 composable pattern for AdSense async script loading with duplicate detection (plan 04-01)
+40. **AdSenseBanner with responsive ad units** - Component with data-full-width-responsive for mobile adaptation and placeholder fallback (plan 04-01)
+41. **Preallocated ad space to prevent CLS** - minHeight prop on ad containers prevents layout shift when ads load (plan 04-01)
+42. **Three ad placements on DeckBuilder** - Top horizontal banner, mid-page auto ad, sidebar vertical ad (within 3-4 max limit) (plan 04-01)
+43. **FTC disclosure in footer** - "Affiliate links support this site" in AuthenticatedLayout footer per locked decision (plan 04-01)
 
 ### Pending Todos
 
@@ -89,10 +95,12 @@ None yet.
 
 ### Blockers/Concerns
 
-None yet.
+- AdSense approval timeline (1-2 weeks) may delay actual ad display
+- Ad blockers (uBlock Origin, AdBlock) will block ~20-40% of ads - diversify revenue with affiliate links
+- Monitor Core Web Vitals after real ads load (may affect CLS despite preallocated space)
 
 ## Session Continuity
 
-Last session: 2026-02-07 06:21 UTC
-Stopped at: Completed 03-02 - URL-based deck sharing
+Last session: 2026-02-07 08:14 UTC
+Stopped at: Completed 04-01 - Google AdSense integration
 Resume file: None
