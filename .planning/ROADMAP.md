@@ -103,12 +103,12 @@ Plans:
 4. Application is fully responsive and functional on mobile devices
 5. Pages load quickly (< 3 seconds) even with ads and affiliate content
 
-**Plans**: TBD
+**Plans**: 3 plans in 2 waves
 
 Plans:
-- [ ] 04-01: AdSense integration and banner ad placement
-- [ ] 04-02: Affiliate link integration with FTC compliance disclosures
-- [ ] 04-03: Mobile responsive design refinement and performance optimization
+- [ ] 04-01-PLAN.md — AdSense integration and banner ad placement (Wave 1)
+- [ ] 04-02-PLAN.md — Affiliate link integration with FTC compliance disclosures (Wave 2)
+- [ ] 04-03-PLAN.md — Mobile responsive design refinement and performance optimization (Wave 2)
 
 ## Progress
 
