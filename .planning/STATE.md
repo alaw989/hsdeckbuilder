@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-06)
 ## Current Position
 
 Phase: 4 of 4 (Monetization & Platform Polish)
-Plan: 1 of 6 in current phase
+Plan: 2 of 6 in current phase
 Status: In progress
-Last activity: 2026-02-07 — Completed Google AdSense integration with responsive ads
+Last activity: 2026-02-07 — Completed Amazon affiliate links and USD cost display
 
-Progress: [███░░░░░░] 30%
+Progress: [████░░░░] 40%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
-- Average duration: 2.1m
-- Total execution time: 0.45 hours
+- Total plans completed: 14
+- Average duration: 2.2m
+- Total execution time: 0.51 hours
 
 **By Phase:**
 
@@ -30,7 +30,7 @@ Progress: [███░░░░░░] 30%
 | 01    | 3     | 10m   | 3m       |
 | 02    | 6     | 14m   | 2.3m     |
 | 03    | 3     | 7m    | 2.3m     |
-| 04    | 1     | 2m    | 2m       |
+| 04    | 2     | 5m    | 2.5m     |
 
 **Recent Trend:**
 - Last 5 plans: 2.2m
@@ -88,6 +88,10 @@ Recent decisions affecting current work:
 41. **Preallocated ad space to prevent CLS** - minHeight prop on ad containers prevents layout shift when ads load (plan 04-01)
 42. **Three ad placements on DeckBuilder** - Top horizontal banner, mid-page auto ad, sidebar vertical ad (within 3-4 max limit) (plan 04-01)
 43. **FTC disclosure in footer** - "Affiliate links support this site" in AuthenticatedLayout footer per locked decision (plan 04-01)
+44. **Amazon Associates only for affiliate links** - Using Amazon Associates program with direct links (no PAAPI5 API, deprecated April 2026) (plan 04-02)
+45. **Dedicated affiliate section pattern** - Affiliate links in separate panel (not inline with analytics) per CONTEXT.md locked decision (plan 04-02)
+46. **USD cost from dust calculation** - $0.0143 per dust based on pack economics ($43 for 3000 dust minus ~400 duplicate value) (plan 04-02)
+47. **VITE_AMAZON_ASSOCIATES_TAG environment variable** - Amazon associate ID configured via environment for easy deployment (plan 04-02)
 
 ### Pending Todos
 
@@ -96,11 +100,13 @@ None yet.
 ### Blockers/Concerns
 
 - AdSense approval timeline (1-2 weeks) may delay actual ad display
-- Ad blockers (uBlock Origin, AdBlock) will block ~20-40% of ads - diversify revenue with affiliate links
+- Ad blockers (uBlock Origin, AdBlock) will block ~20-40% of ads - mitigated by adding affiliate links (04-02)
 - Monitor Core Web Vitals after real ads load (may affect CLS despite preallocated space)
+- Amazon Associates account needed for affiliate revenue (user setup required)
+- Product ASINs in AmazonCardPacks.vue are placeholders and need replacement with actual Hearthstone card pack ASINs
 
 ## Session Continuity
 
-Last session: 2026-02-07 08:14 UTC
-Stopped at: Completed 04-01 - Google AdSense integration
+Last session: 2026-02-07 08:19 UTC
+Stopped at: Completed 04-02 - Amazon affiliate links and USD cost display
 Resume file: None
