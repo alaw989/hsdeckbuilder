@@ -2,122 +2,25 @@
 
 ## Overview
 
-From Laravel 11 + Vue 3 + Inertia.js foundation to a fully functional deck builder with card search, list-based deck construction, visualizations, sharing capabilities, and basic monetization. The platform evolves from infrastructure (card data with caching) to core deck building (validation, deck codes, analytics) to sharing (URL generation, cloning) to monetization (ads, affiliates) — delivering incremental user value at each phase while avoiding common pitfalls (API rate limits, performance issues, ad blocker revenue loss).
+✅ **v1.0 MVP Complete** — Full roadmap archived to `.planning/milestones/v1.0-ROADMAP.md`
 
-## Phases
+Shipped: Laravel 12 + Vue 3 deck builder with card search, list-based construction, deck codes, LocalStorage persistence, URL sharing, AdSense, and affiliate links.
 
-**Phase Numbering:**
-- Integer phases (1, 2, 3): Planned milestone work
-- Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
+## Next Milestone
 
-Decimal phases appear between their surrounding integers in numeric order.
+Awaiting user validation and planning for v1.1.
 
-- [ ] **Phase 1: Foundation & Card Data** - Infrastructure, caching, card search/filter
-- [x] **Phase 2: Deck Builder MVP** - List-based builder, validation, visualizations
-- [ ] **Phase 3: Deck Sharing & Persistence** - LocalStorage, URLs, cloning
-- [x] **Phase 4: Monetization & Platform Polish** - Ads, affiliates, responsive, performance
-
-## Phase Details
-
-### Phase 1: Foundation & Card Data
-
-**Goal**: Users can search and filter the complete Hearthstone card database through a responsive Vue 3 interface backed by cached Laravel API integration.
-
-**Depends on**: Nothing (first phase)
-
-**Requirements**: CORE-01, CORE-02, CORE-07, CORE-08, CORE-11, PLAT-01, PLAT-03
-
-**Success Criteria** (what must be TRUE):
-1. User can search for cards by name with autocomplete suggestions appearing as they type
-2. User can filter cards by class, mana cost, type, rarity, and card set simultaneously
-3. User can select from all 11 Hearthstone classes and see only class-appropriate cards
-4. User can select deck format (Standard/Wild/Twist) and see only valid cards for that format
-5. Card data loads quickly (< 3 seconds) and is cached to avoid repeated API calls
-
-**Plans:** 3 plans in 3 waves
-
-Plans:
-- [ ] 01-01-PLAN.md — Laravel 11 + Vue 3 + Inertia.js project setup with Tailwind CSS (Wave 1)
-- [ ] 01-02-PLAN.md — HearthstoneJSON API integration with Redis caching layer (Wave 2)
-- [ ] 01-03-PLAN.md — Card search UI with autocomplete and multi-filter capabilities (Wave 3)
-
-### Phase 2: Deck Builder MVP
-
-**Goal**: Users can construct valid Hearthstone decks using a list-based builder with real-time validation, deck code import/export, and visual analytics.
-
-**Depends on**: Phase 1
-
-**Requirements**: CORE-03, CORE-04, CORE-05, CORE-06, CORE-09, CORE-10, VIS-01, VIS-02, VIS-03, VIS-04
-
-**Success Criteria** (what must be TRUE):
-1. User can add cards to deck list and remove cards from deck list
-2. System validates deck has exactly 30 cards and only valid class/neutral cards
-3. User can import deck via Blizzard deck code string and see the full deck list
-4. User can export their deck via Blizzard deck code string
-5. User can see mana curve chart, dust cost breakdown, and card tooltips for their deck
-
-**Plans:** 6 plans in 4 waves
-
-Plans:
-- [x] 02-01-PLAN.md — List-based deck builder UI with add/remove card functionality (Wave 1)
-- [x] 02-02-PLAN.md — Deck validation logic with TDD (30 cards, class restrictions, duplicate limits) (Wave 2)
-- [x] 02-03-PLAN.md — Deck code encode/decode utilities using Blizzard deck string format (Wave 3)
-- [x] 02-04-PLAN.md — Visual analytics (mana curve chart, dust cost calculator) (Wave 3)
-- [x] 02-05-PLAN.md — Deck code import/export UI components (Wave 4)
-- [x] 02-06-PLAN.md — Card tooltips with Teleport (Wave 4)
-
-### Phase 3: Deck Sharing & Persistence
-
-**Goal**: Users can save decks locally, share decks via unique URLs, and clone decks from shared links.
-
-**Depends on**: Phase 2
-
-**Requirements**: DECK-01, DECK-02, DECK-03, DECK-04, DECK-05, DECK-06
-
-**Success Criteria** (what must be TRUE):
-1. User can save deck to browser LocalStorage and load previously saved decks
-2. User can delete saved decks from their local storage
-3. System generates unique URL for each deck that can be shared with others
-4. User can view deck from shared URL and see complete deck list with analytics
-5. User can clone deck from shared URL into their own local storage
-
-**Plans:** 3 plans in 3 waves
-
-Plans:
-- [ ] 03-01-PLAN.md — LocalStorage persistence for save/load/delete deck operations (Wave 1)
-- [ ] 03-02-PLAN.md — Unique URL generation and deck encoding for sharing (Wave 2)
-- [ ] 03-03-PLAN.md — Shared deck viewing and cloning functionality (Wave 3)
-
-### Phase 4: Monetization & Platform Polish
-
-**Goal**: Platform displays ads and affiliate links for revenue while ensuring responsive mobile design and fast page loads.
-
-**Depends on**: Phase 3
-
-**Requirements**: MON-01, MON-02, MON-03, PLAT-01, PLAT-02
-
-**Success Criteria** (what must be TRUE):
-1. System displays banner ads on deck pages without breaking layout
-2. System displays affiliate links for card pack purchases on deck pages
-3. System properly discloses affiliate relationships (FTC compliance footer)
-4. Application is fully responsive and functional on mobile devices
-5. Pages load quickly (< 3 seconds) even with ads and affiliate content
-
-**Plans**: 3 plans in 2 waves
-
-Plans:
-- [x] 04-01-PLAN.md — AdSense integration and banner ad placement (Wave 1)
-- [x] 04-02-PLAN.md — Affiliate link integration with FTC compliance disclosures (Wave 2)
-- [x] 04-03-PLAN.md — Mobile responsive design refinement and performance optimization (Wave 2)
+Potential v1.1 features:
+- User accounts and authentication
+- Cloud deck storage
+- Premium subscriptions
+- Advanced analytics
 
 ## Progress
 
-**Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4
-
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1. Foundation & Card Data | 3/3 | Phase complete | 2026-02-07 |
-| 2. Deck Builder MVP | 6/6 | Phase complete | 2026-02-07 |
-| 3. Deck Sharing & Persistence | 3/3 | Phase complete | 2026-02-07 |
-| 4. Monetization & Platform Polish | 3/3 | Phase complete | 2026-02-07 |
+| Phase | Milestone | Plans Complete | Status | Completed |
+|-------|-----------|----------------|--------|----------|
+| 1. Foundation & Card Data | v1.0 | 3/3 | Complete | 2026-02-07 |
+| 2. Deck Builder MVP | v1.0 | 6/6 | Complete | 2026-02-07 |
+| 3. Deck Sharing & Persistence | v1.0 | 3/3 | Complete | 2026-02-07 |
+| 4. Monetization & Platform Polish | v1.0 | 3/3 | Complete | 2026-02-07 |
