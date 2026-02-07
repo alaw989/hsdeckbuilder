@@ -7,6 +7,8 @@ import FilterPanel from '@/Components/FilterPanel.vue';
 import CardGrid from '@/Components/CardGrid.vue';
 import DeckList from '@/Components/DeckList.vue';
 import DeckValidation from '@/Components/DeckValidation.vue';
+import DeckStats from '@/Components/DeckStats.vue';
+import CardTooltip from '@/Components/CardTooltip.vue';
 
 const props = defineProps({
   cards: {
@@ -30,6 +32,19 @@ const {
   setCardCount,
   getCardsByManaCost
 } = useDeckBuilder(props.initialClass);
+
+// Tooltip state
+const hoveredCard = ref(null);
+const tooltipPosition = ref({ x: 0, y: 0 });
+
+function showTooltip(event, card) {
+  hoveredCard.value = card;
+  tooltipPosition.value = { x: event.clientX, y: event.clientY };
+}
+
+function hideTooltip() {
+  hoveredCard.value = null;
+}
 
 // Card search/filter state
 const searchQuery = ref('');
@@ -226,6 +241,8 @@ function selectCard(card) {
               :cards="filteredCards"
               :show-add-button="true"
               @add-card="handleCardSelect"
+              @card-hover="showTooltip"
+              @card-leave="hideTooltip"
             />
           </div>
         </div>
@@ -234,11 +251,16 @@ function selectCard(card) {
         <div class="lg:col-span-1">
           <div class="space-y-4">
             <!-- Validation status -->
-            <div class="bg-white rounded-lg shadow p-4 sticky top-4">
+            <div class="bg-white rounded-lg shadow p-4">
               <DeckValidation
                 :deck-cards="deckCards"
                 :selected-class="selectedClass"
               />
+            </div>
+
+            <!-- Deck stats -->
+            <div class="bg-white rounded-lg shadow p-4">
+              <DeckStats :deck-cards="deckCards" />
             </div>
 
             <!-- Deck list -->
@@ -254,5 +276,14 @@ function selectCard(card) {
 
       </div>
     </div>
+
+    <!-- Global tooltip -->
+    <CardTooltip
+      :card="hoveredCard"
+      :show="hoveredCard !== null"
+      :x="tooltipPosition.x"
+      :y="tooltipPosition.y"
+      @close="hideTooltip"
+    />
   </div>
 </template>

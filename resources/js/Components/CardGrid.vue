@@ -4,10 +4,18 @@ const props = defineProps({
     showAddButton: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(['add-card']);
+const emit = defineEmits(['add-card', 'card-hover', 'card-leave']);
 
 function addCard(card) {
     emit('add-card', card);
+}
+
+function handleCardHover(event, card) {
+    emit('card-hover', event, card);
+}
+
+function handleCardLeave() {
+    emit('card-leave');
 }
 </script>
 
@@ -27,6 +35,8 @@ function addCard(card) {
             <div
                 v-for="card in cards"
                 :key="card.id"
+                @mouseenter="handleCardHover($event, card)"
+                @mouseleave="handleCardLeave"
                 class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden group"
             >
                 <!-- Card image -->
