@@ -81,12 +81,12 @@ Plans:
 4. User can view deck from shared URL and see complete deck list with analytics
 5. User can clone deck from shared URL into their own local storage
 
-**Plans**: TBD
+**Plans:** 3 plans in 3 waves
 
 Plans:
-- [ ] 03-01: LocalStorage persistence for save/load/delete deck operations
-- [ ] 03-02: Unique URL generation and deck encoding for sharing
-- [ ] 03-03: Shared deck viewing and cloning functionality
+- [ ] 03-01-PLAN.md — LocalStorage persistence for save/load/delete deck operations (Wave 1)
+- [ ] 03-02-PLAN.md — Unique URL generation and deck encoding for sharing (Wave 2)
+- [ ] 03-03-PLAN.md — Shared deck viewing and cloning functionality (Wave 3)
 
 ### Phase 4: Monetization & Platform Polish
 
