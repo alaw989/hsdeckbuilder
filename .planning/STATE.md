@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-06)
 ## Current Position
 
 Phase: 4 of 4 (Monetization & Platform Polish)
-Plan: 2 of 6 in current phase
+Plan: 3 of 6 in current phase
 Status: In progress
-Last activity: 2026-02-07 — Completed Amazon affiliate links and USD cost display
+Last activity: 2026-02-07 — Completed mobile responsive design with tabbed navigation and performance optimizations
 
-Progress: [████░░░░] 40%
+Progress: [█████░░░] 50%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
-- Average duration: 2.2m
-- Total execution time: 0.51 hours
+- Total plans completed: 15
+- Average duration: 2.3m
+- Total execution time: 0.55 hours
 
 **By Phase:**
 
@@ -30,7 +30,7 @@ Progress: [████░░░░] 40%
 | 01    | 3     | 10m   | 3m       |
 | 02    | 6     | 14m   | 2.3m     |
 | 03    | 3     | 7m    | 2.3m     |
-| 04    | 2     | 5m    | 2.5m     |
+| 04    | 3     | 8m    | 2.7m     |
 
 **Recent Trend:**
 - Last 5 plans: 2.2m
@@ -92,6 +92,12 @@ Recent decisions affecting current work:
 45. **Dedicated affiliate section pattern** - Affiliate links in separate panel (not inline with analytics) per CONTEXT.md locked decision (plan 04-02)
 46. **USD cost from dust calculation** - $0.0143 per dust based on pack economics ($43 for 3000 dust minus ~400 duplicate value) (plan 04-02)
 47. **VITE_AMAZON_ASSOCIATES_TAG environment variable** - Amazon associate ID configured via environment for easy deployment (plan 04-02)
+48. **Tap-to-modal for card tooltips on mobile** - Hover interactions don't exist on touch devices; modal provides better UX with tap-to-open, backdrop-dismiss, and escape key (plan 04-03)
+49. **Bottom tab bar for mobile navigation** - Native-app-like UX pattern with fixed positioning at bottom, safe area insets for iOS devices, inline SVG icons for zero dependencies (plan 04-03)
+50. **Slide-out drawer for main navigation** - Standard mobile pattern with smooth transitions, overlay backdrop, click-to-close behavior (plan 04-03)
+51. **Lazy loading below-fold images only** - CardGrid images use loading="lazy" with decoding="async"; critical content (tooltips) uses loading="eager" (plan 04-03)
+52. **Responsive srcset for high-DPI displays** - CardTooltip uses 1x/2x srcset (256x and 512x) for sharper images on retina screens (plan 04-03)
+53. **Code splitting via import.meta.glob** - Route-based code splitting configured in app.js; load deck builder code only when needed (plan 04-03)
 
 ### Pending Todos
 
@@ -104,9 +110,12 @@ None yet.
 - Monitor Core Web Vitals after real ads load (may affect CLS despite preallocated space)
 - Amazon Associates account needed for affiliate revenue (user setup required)
 - Product ASINs in AmazonCardPacks.vue are placeholders and need replacement with actual Hearthstone card pack ASINs
+- Core Web Vitals should be monitored after production deployment to ensure LCP < 2.5s and CLS < 0.1 with real mobile devices
+- Safe area insets may need testing on physical iOS devices (currently only env() CSS support)
+- Consider adding touch feedback (visual ripple/scale) for better mobile interaction feel
 
 ## Session Continuity
 
-Last session: 2026-02-07 08:19 UTC
-Stopped at: Completed 04-02 - Amazon affiliate links and USD cost display
+Last session: 2026-02-07 08:20 UTC
+Stopped at: Completed 04-03 - Mobile responsive design with tabbed navigation
 Resume file: None
