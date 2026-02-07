@@ -6,6 +6,7 @@ import SearchInput from '@/Components/SearchInput.vue';
 import FilterPanel from '@/Components/FilterPanel.vue';
 import CardGrid from '@/Components/CardGrid.vue';
 import DeckList from '@/Components/DeckList.vue';
+import DeckValidation from '@/Components/DeckValidation.vue';
 
 const props = defineProps({
   cards: {
@@ -231,12 +232,23 @@ function selectCard(card) {
 
         <!-- Right panel: Deck list (1/3 width) -->
         <div class="lg:col-span-1">
-          <div class="bg-white rounded-lg shadow p-4 sticky top-4">
-            <DeckList
-              :deck-cards="deckCards"
-              @remove-card="handleRemoveCard"
-              @set-count="handleSetCount"
-            />
+          <div class="space-y-4">
+            <!-- Validation status -->
+            <div class="bg-white rounded-lg shadow p-4 sticky top-4">
+              <DeckValidation
+                :deck-cards="deckCards"
+                :selected-class="selectedClass"
+              />
+            </div>
+
+            <!-- Deck list -->
+            <div class="bg-white rounded-lg shadow p-4">
+              <DeckList
+                :deck-cards="deckCards"
+                @remove-card="handleRemoveCard"
+                @set-count="handleSetCount"
+              />
+            </div>
           </div>
         </div>
 
