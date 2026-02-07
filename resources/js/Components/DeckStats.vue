@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import { Bar } from 'vue-chart-3';
+import { BarChart } from 'vue-chart-3';
 import { Chart, registerables } from 'chart.js';
 import { calculateDustCost, getRarityColor, calculateUsdCost } from '../Utils/dustCalculation';
 
@@ -97,8 +97,8 @@ const totalCards = computed(() =>
     <div>
       <h3 class="text-sm font-semibold text-gray-700 mb-3">Mana Curve</h3>
       <div class="bg-gray-50 rounded-lg p-4" style="height: 180px;">
-        <Bar v-if="totalCards > 0"
-             :data="chartData"
+        <BarChart v-if="totalCards > 0"
+             :chart-data="chartData"
              :options="chartOptions" />
         <div v-else
              class="h-full flex items-center justify-center text-gray-400 text-sm">
