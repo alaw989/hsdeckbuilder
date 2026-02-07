@@ -1,7 +1,14 @@
 <script setup>
 const props = defineProps({
     cards: { type: Array, required: true },
+    showAddButton: { type: Boolean, default: false },
 });
+
+const emit = defineEmits(['add-card']);
+
+function addCard(card) {
+    emit('add-card', card);
+}
 </script>
 
 <template>
@@ -28,7 +35,8 @@ const props = defineProps({
                         :src="`https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png`"
                         :alt="card.name"
                         loading="lazy"
-                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200 cursor-pointer"
+                        @click="addCard(card)"
                     />
 
                     <!-- Mana cost badge -->
@@ -39,6 +47,15 @@ const props = defineProps({
                     <!-- Class badge -->
                     <div class="absolute bottom-2 right-2 px-2 py-1 rounded bg-black/50 text-white text-xs font-medium backdrop-blur-sm">
                         {{ card.cardClass?.toLowerCase() }}
+                    </div>
+
+                    <!-- Add button overlay on hover -->
+                    <div v-if="showAddButton"
+                         class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
+                         @click="addCard(card)">
+                        <div class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold shadow-lg transform scale-95 group-hover:scale-100 transition-transform">
+                            Add to Deck
+                        </div>
                     </div>
                 </div>
 

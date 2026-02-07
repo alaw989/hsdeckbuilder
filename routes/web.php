@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\DeckBuilderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,8 @@ Route::get('/', function () {
 Route::get('/cards', [CardController::class, 'index'])->name('cards.index');
 Route::get('/cards/class/{class}', [CardController::class, 'byClass'])->name('cards.byClass');
 Route::get('/cards/format/{format}', [CardController::class, 'byFormat'])->name('cards.byFormat');
+
+Route::get('/deck-builder', [DeckBuilderController::class, 'index'])->name('deck-builder');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
