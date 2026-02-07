@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-06)
 ## Current Position
 
 Phase: 2 of 4 (Deck Builder MVP)
-Plan: 3 of 5 in current phase
+Plan: 4 of 5 in current phase
 Status: In progress
-Last activity: 2026-02-07 — Completed deck code encode/decode utilities
+Last activity: 2026-02-07 — Completed mana curve chart and dust cost calculator
 
-Progress: [█████░░░░░░] 60%
+Progress: [██████░░░░░] 80%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
-- Average duration: 2.5m
-- Total execution time: 0.25 hours
+- Total plans completed: 7
+- Average duration: 2.3m
+- Total execution time: 0.27 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01    | 3     | 10m   | 3m       |
-| 02    | 3     | 6m    | 2m       |
+| 02    | 4     | 8m    | 2m       |
 
 **Recent Trend:**
-- Last 5 plans: 2.4m
+- Last 5 plans: 2.2m
 - Trend: Consistent fast execution
 
 *Updated after each plan completion*
@@ -60,6 +60,9 @@ Recent decisions affecting current work:
 15. **@firestone-hs/deckstrings@2.2.8 for deck code handling** - Hearthstone deckstring library for base64 + varint encoding/decoding (plan 02-03)
 16. **Hero DBF ID mappings hardcoded** - Static mappings for all 11 classes to avoid external API dependency (plan 02-03)
 17. **Error object return pattern** - Utilities return `{ data, error }` objects for consistent error handling (plan 02-03)
+18. **Chart.js + vue-chart-3 for charting** - Vue 3 Composition API compatible charting library for mana curve visualization (plan 02-04)
+19. **Official Hearthstone dust costs** - Dust calculation uses official values: Free 0, Common 40, Rare 100, Epic 400, Legendary 1600 (plan 02-04)
+20. **Computed properties for reactive charts** - Mana curve and dust cost use computed() for automatic updates when deck changes (plan 02-04)
 
 ### Pending Todos
 
@@ -72,5 +75,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-07 05:31 UTC
-Stopped at: Completed 02-03 - Deck code encode/decode utilities
+Stopped at: Completed 02-04 - Mana curve chart and dust cost calculator
 Resume file: None
