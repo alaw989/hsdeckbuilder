@@ -39,14 +39,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Monetization - MVP
 
-- [ ] **MON-01**: System displays banner ads on deck pages
-- [ ] **MON-02**: System displays affiliate links for card pack purchases
-- [ ] **MON-03**: System properly discloses affiliate relationships (FTC compliance)
+- [x] **MON-01**: System displays banner ads on deck pages
+- [x] **MON-02**: System displays affiliate links for card pack purchases
+- [x] **MON-03**: System properly discloses affiliate relationships (FTC compliance)
 
 ### Platform
 
-- [ ] **PLAT-01**: Application is responsive on mobile devices
-- [ ] **PLAT-02**: Pages load quickly (< 3 seconds)
+- [x] **PLAT-01**: Application is responsive on mobile devices
+- [x] **PLAT-02**: Pages load quickly (< 3 seconds)
 - [ ] **PLAT-03**: Card data is cached to avoid API rate limits
 
 ## v2 Requirements
@@ -135,11 +135,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DECK-04 | Phase 3 | Pending |
 | DECK-05 | Phase 3 | Pending |
 | DECK-06 | Phase 3 | Pending |
-| MON-01 | Phase 4 | Pending |
-| MON-02 | Phase 4 | Pending |
-| MON-03 | Phase 4 | Pending |
-| PLAT-01 | Phase 4 | Pending |
-| PLAT-02 | Phase 4 | Pending |
+| MON-01 | Phase 4 | Complete |
+| MON-02 | Phase 4 | Complete |
+| MON-03 | Phase 4 | Complete |
+| PLAT-01 | Phase 4 | Complete |
+| PLAT-02 | Phase 4 | Complete |
 | PLAT-03 | Phase 1 | Pending |
 
 **Coverage:**

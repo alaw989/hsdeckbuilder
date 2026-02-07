@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Foundation & Card Data** - Infrastructure, caching, card search/filter
 - [x] **Phase 2: Deck Builder MVP** - List-based builder, validation, visualizations
 - [ ] **Phase 3: Deck Sharing & Persistence** - LocalStorage, URLs, cloning
-- [ ] **Phase 4: Monetization & Platform Polish** - Ads, affiliates, responsive, performance
+- [x] **Phase 4: Monetization & Platform Polish** - Ads, affiliates, responsive, performance
 
 ## Phase Details
 
@@ -106,9 +106,9 @@ Plans:
 **Plans**: 3 plans in 2 waves
 
 Plans:
-- [ ] 04-01-PLAN.md — AdSense integration and banner ad placement (Wave 1)
-- [ ] 04-02-PLAN.md — Affiliate link integration with FTC compliance disclosures (Wave 2)
-- [ ] 04-03-PLAN.md — Mobile responsive design refinement and performance optimization (Wave 2)
+- [x] 04-01-PLAN.md — AdSense integration and banner ad placement (Wave 1)
+- [x] 04-02-PLAN.md — Affiliate link integration with FTC compliance disclosures (Wave 2)
+- [x] 04-03-PLAN.md — Mobile responsive design refinement and performance optimization (Wave 2)
 
 ## Progress
 
@@ -119,5 +119,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation & Card Data | 3/3 | Phase complete | 2026-02-07 |
 | 2. Deck Builder MVP | 6/6 | Phase complete | 2026-02-07 |
-| 3. Deck Sharing & Persistence | 0/3 | Not started | - |
-| 4. Monetization & Platform Polish | 0/3 | Not started | - |
+| 3. Deck Sharing & Persistence | 3/3 | Phase complete | 2026-02-07 |
+| 4. Monetization & Platform Polish | 3/3 | Phase complete | 2026-02-07 |
