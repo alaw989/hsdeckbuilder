@@ -1,13 +1,19 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import { useAdSense } from '@/Composables/useAdSense';
 
 const showingNavigationDropdown = ref(false);
+const { initAdSense } = useAdSense();
+
+onMounted(() => {
+    initAdSense();
+});
 </script>
 
 <template>
@@ -193,6 +199,15 @@ const showingNavigationDropdown = ref(false);
             <main>
                 <slot />
             </main>
+
+            <!-- AdSense FTC disclosure in footer -->
+            <footer class="bg-white border-t border-gray-200 mt-auto">
+                <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+                    <p class="text-center text-sm text-gray-500">
+                        Affiliate links support this site
+                    </p>
+                </div>
+            </footer>
         </div>
     </div>
 </template>

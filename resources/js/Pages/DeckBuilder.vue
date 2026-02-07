@@ -17,6 +17,7 @@ import DeckCodeExport from '@/Components/DeckCodeExport.vue';
 import ShareDeckModal from '@/Components/ShareDeckModal.vue';
 import SavedDecksModal from '@/Components/SavedDecksModal.vue';
 import ConfirmCloneModal from '@/Components/ConfirmCloneModal.vue';
+import AdSenseBanner from '@/Components/Ads/AdSenseBanner.vue';
 import { useDeckStorage } from '@/Composables/useDeckStorage';
 import { serializeDeckForStorage } from '@/Utils/deckStorage';
 
@@ -452,6 +453,11 @@ function selectCard(card) {
       </div>
     </div>
 
+    <!-- Top banner ad -->
+    <div class="max-w-7xl mx-auto px-4">
+      <AdSenseBanner ad-slot="1234567890" ad-format="horizontal" min-height="90px" />
+    </div>
+
     <!-- Shared deck banner -->
     <div
       v-if="sharedDeck"
@@ -522,6 +528,9 @@ function selectCard(card) {
             </div>
           </div>
 
+          <!-- Mid-page banner ad -->
+          <AdSenseBanner ad-slot="2345678901" ad-format="auto" min-height="250px" />
+
           <!-- Search and filters -->
           <div class="bg-white rounded-lg shadow p-4">
             <SearchInput
@@ -572,6 +581,9 @@ function selectCard(card) {
             <div class="bg-white rounded-lg shadow p-4">
               <DeckStats :deck-cards="deckCards" />
             </div>
+
+            <!-- Sidebar ad -->
+            <AdSenseBanner ad-slot="3456789012" ad-format="vertical" min-height="250px" />
 
             <!-- Deck list -->
             <div class="bg-white rounded-lg shadow p-4">
