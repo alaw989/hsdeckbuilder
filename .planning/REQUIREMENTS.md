@@ -9,24 +9,24 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Core Deck Building
 
-- [ ] **CORE-01**: User can search Hearthstone cards by name with autocomplete
-- [ ] **CORE-02**: User can filter cards by class, mana cost, type, rarity, and card set
-- [ ] **CORE-03**: User can add cards to deck list (list-based builder)
-- [ ] **CORE-04**: User can remove cards from deck list
-- [ ] **CORE-05**: System validates deck has exactly 30 cards
-- [ ] **CORE-06**: System validates deck contains only cards from selected class plus neutral cards
-- [ ] **CORE-07**: User can select deck format (Standard/Wild/Twist)
-- [ ] **CORE-08**: System filters available cards based on selected format
-- [ ] **CORE-09**: User can import deck via Blizzard deck code string
-- [ ] **CORE-10**: User can export deck via Blizzard deck code string
-- [ ] **CORE-11**: User can select from all 11 Hearthstone classes
+- [x] **CORE-01**: User can search Hearthstone cards by name with autocomplete
+- [x] **CORE-02**: User can filter cards by class, mana cost, type, rarity, and card set
+- [x] **CORE-03**: User can add cards to deck list (list-based builder)
+- [x] **CORE-04**: User can remove cards from deck list
+- [x] **CORE-05**: System validates deck has exactly 30 cards
+- [x] **CORE-06**: System validates deck contains only cards from selected class plus neutral cards
+- [x] **CORE-07**: User can select deck format (Standard/Wild/Twist)
+- [x] **CORE-08**: System filters available cards based on selected format
+- [x] **CORE-09**: User can import deck via Blizzard deck code string
+- [x] **CORE-10**: User can export deck via Blizzard deck code string
+- [x] **CORE-11**: User can select from all 11 Hearthstone classes
 
 ### Visualization & Analytics
 
-- [ ] **VIS-01**: System displays mana curve chart for current deck
-- [ ] **VIS-02**: System displays dust cost breakdown (common/rare/epic/legendary)
-- [ ] **VIS-03**: System displays card images and tooltips
-- [ ] **VIS-04**: User can see card count by mana cost (1-10)
+- [x] **VIS-01**: System displays mana curve chart for current deck
+- [x] **VIS-02**: System displays dust cost breakdown (common/rare/epic/legendary)
+- [x] **VIS-03**: System displays card images and tooltips
+- [x] **VIS-04**: User can see card count by mana cost (1-10)
 
 ### Deck Management
 
@@ -114,21 +114,21 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CORE-01 | Phase 1 | Pending |
-| CORE-02 | Phase 1 | Pending |
-| CORE-03 | Phase 2 | Pending |
-| CORE-04 | Phase 2 | Pending |
-| CORE-05 | Phase 2 | Pending |
-| CORE-06 | Phase 2 | Pending |
-| CORE-07 | Phase 1 | Pending |
-| CORE-08 | Phase 1 | Pending |
-| CORE-09 | Phase 2 | Pending |
-| CORE-10 | Phase 2 | Pending |
-| CORE-11 | Phase 1 | Pending |
-| VIS-01 | Phase 2 | Pending |
-| VIS-02 | Phase 2 | Pending |
-| VIS-03 | Phase 2 | Pending |
-| VIS-04 | Phase 2 | Pending |
+| CORE-01 | Phase 1 | Complete |
+| CORE-02 | Phase 1 | Complete |
+| CORE-03 | Phase 2 | Complete |
+| CORE-04 | Phase 2 | Complete |
+| CORE-05 | Phase 2 | Complete |
+| CORE-06 | Phase 2 | Complete |
+| CORE-07 | Phase 1 | Complete |
+| CORE-08 | Phase 1 | Complete |
+| CORE-09 | Phase 2 | Complete |
+| CORE-10 | Phase 2 | Complete |
+| CORE-11 | Phase 1 | Complete |
+| VIS-01 | Phase 2 | Complete |
+| VIS-02 | Phase 2 | Complete |
+| VIS-03 | Phase 2 | Complete |
+| VIS-04 | Phase 2 | Complete |
 | DECK-01 | Phase 3 | Pending |
 | DECK-02 | Phase 3 | Pending |
 | DECK-03 | Phase 3 | Pending |
