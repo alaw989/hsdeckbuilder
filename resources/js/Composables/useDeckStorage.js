@@ -1,69 +1,92 @@
 import { useLocalStorage } from '@vueuse/core';
 import { computed } from 'vue';
-import { serializeDeckForStorage, deserializeDeckFromStorage } from '../Utils/deckStorage.js';
+import {
+  serializeDeckForStorage,
+  deserializeDeckFromStorage,
+  generateDeckId
+} from '@/Utils/deckStorage';
 
 const STORAGE_KEY = 'hs-saved-decks';
 
 /**
- * Vue 3 composable for reactive LocalStorage deck management
- * Provides CRUD operations for saved decks with automatic persistence
+ * Composable for LocalStorage-based deck persistence
+ * Uses VueUse's useLocalStorage for SSR safety and cross-tab sync
+ *
+ * @returns {Object} Deck storage API
  */
 export function useDeckStorage() {
-  // Reactive saved decks array with automatic LocalStorage sync
+  // Reactive saved decks array synced with LocalStorage
   const savedDecks = useLocalStorage(STORAGE_KEY, []);
 
   /**
-   * Save current deck to LocalStorage
+   * Save a deck to LocalStorage
    *
-   * @param {Object} deckData - { cards, class, name }
-   * @returns {Object} { data: string|null (deck ID), error: string|null }
+   * @param {Object} deckData - { deckCards, deckClass, deckName }
+   * @returns {Object} { data: { id, name } | null, error: string | null }
    */
   function saveDeck(deckData) {
     try {
-      const { cards, class: deckClass, name } = deckData;
+      const { deckCards, deckClass, deckName } = deckData;
 
-      // Serialize deck for storage
-      const { data: serialized, error } = serializeDeckForStorage(
-        cards,
-        deckClass,
-        name
-      );
-
-      if (error) {
-        return { data: null, error };
-      }
-
-      // Add to saved decks array (triggers LocalStorage update)
-      savedDecks.value.push(serialized);
-
-      return { data: serialized.id, error: null };
-    } catch (error) {
-      // Handle QuotaExceededError for LocalStorage full
-      if (error.name === 'QuotaExceededError') {
+      // Validate input
+      if (!deckCards || !deckClass) {
         return {
           data: null,
-          error: 'Storage full. Please delete some saved decks to save more.'
+          error: 'Deck cards and class are required'
         };
       }
 
+      // Serialize deck for storage
+      const { data: serialized, error: serializeError } = serializeDeckForStorage(
+        deckCards,
+        deckClass,
+        deckName
+      );
+
+      if (serializeError) {
+        return {
+          data: null,
+          error: serializeError
+        };
+      }
+
+      // Add to saved decks
+      savedDecks.value.push(serialized);
+
+      return {
+        data: {
+          id: serialized.id,
+          name: serialized.name
+        },
+        error: null
+      };
+    } catch (error) {
       console.error('Save deck error:', error);
+
+      // Check for QuotaExceededError
+      if (error.name === 'QuotaExceededError') {
+        return {
+          data: null,
+          error: 'LocalStorage is full. Please delete some decks to save more.'
+        };
+      }
+
       return {
         data: null,
-        error: 'Failed to save deck'
+        error: 'Failed to save deck. Please try again.'
       };
     }
   }
 
   /**
-   * Load deck by ID from LocalStorage
+   * Load a deck from LocalStorage by ID
    *
-   * @param {string} deckId - Deck ID to load
-   * @returns {Object} { data: Object|null, error: string|null }
-   *                   data contains { class, cards, name }
+   * @param {string} id - Deck ID
+   * @returns {Object} { data: { class, cards, name } | null, error: string | null }
    */
-  function loadDeck(deckId) {
+  function loadDeck(id) {
     try {
-      const deck = savedDecks.value.find(d => d.id === deckId);
+      const deck = savedDecks.value.find(d => d.id === id);
 
       if (!deck) {
         return {
@@ -72,10 +95,7 @@ export function useDeckStorage() {
         };
       }
 
-      // Deserialize to useDeckBuilder format
-      const { data, error } = deserializeDeckFromStorage(deck);
-
-      return { data, error };
+      return deserializeDeckFromStorage(deck);
     } catch (error) {
       console.error('Load deck error:', error);
       return {
@@ -86,14 +106,14 @@ export function useDeckStorage() {
   }
 
   /**
-   * Delete deck by ID from LocalStorage
+   * Delete a deck from LocalStorage
    *
-   * @param {string} deckId - Deck ID to delete
-   * @returns {Object} { data: boolean, error: string|null }
+   * @param {string} id - Deck ID
+   * @returns {Object} { data: boolean, error: string | null }
    */
-  function deleteDeck(deckId) {
+  function deleteDeck(id) {
     try {
-      const index = savedDecks.value.findIndex(d => d.id === deckId);
+      const index = savedDecks.value.findIndex(d => d.id === id);
 
       if (index === -1) {
         return {
@@ -102,10 +122,12 @@ export function useDeckStorage() {
         };
       }
 
-      // Remove from array (triggers LocalStorage update)
       savedDecks.value.splice(index, 1);
 
-      return { data: true, error: null };
+      return {
+        data: true,
+        error: null
+      };
     } catch (error) {
       console.error('Delete deck error:', error);
       return {
@@ -116,15 +138,15 @@ export function useDeckStorage() {
   }
 
   /**
-   * Update existing deck (e.g., rename)
+   * Update a deck (for rename operations)
    *
-   * @param {string} deckId - Deck ID to update
-   * @param {Object} updates - Fields to update (e.g., { name: 'New Name' })
-   * @returns {Object} { data: boolean, error: string|null }
+   * @param {string} id - Deck ID
+   * @param {Object} updates - Fields to update
+   * @returns {Object} { data: boolean, error: string | null }
    */
-  function updateDeck(deckId, updates) {
+  function updateDeck(id, updates) {
     try {
-      const deck = savedDecks.value.find(d => d.id === deckId);
+      const deck = savedDecks.value.find(d => d.id === id);
 
       if (!deck) {
         return {
@@ -133,10 +155,20 @@ export function useDeckStorage() {
         };
       }
 
-      // Update fields
-      Object.assign(deck, updates, { updatedAt: new Date().toISOString() });
+      // Update allowed fields
+      const allowedUpdates = ['name'];
+      for (const key of allowedUpdates) {
+        if (updates[key] !== undefined) {
+          deck[key] = updates[key];
+        }
+      }
 
-      return { data: true, error: null };
+      deck.updatedAt = new Date().toISOString();
+
+      return {
+        data: true,
+        error: null
+      };
     } catch (error) {
       console.error('Update deck error:', error);
       return {
@@ -146,15 +178,15 @@ export function useDeckStorage() {
     }
   }
 
-  // Computed: count of saved decks
+  // Computed property for deck count
   const deckCount = computed(() => savedDecks.value.length);
 
   return {
     savedDecks,
-    deckCount,
     saveDeck,
     loadDeck,
     deleteDeck,
-    updateDeck
+    updateDeck,
+    deckCount
   };
 }
