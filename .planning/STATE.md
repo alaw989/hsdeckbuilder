@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-06)
 ## Current Position
 
 Phase: 2 of 4 (Deck Builder MVP)
-Plan: 1 of 5 in current phase
+Plan: 2 of 5 in current phase
 Status: In progress
-Last activity: 2026-02-07 — Completed list-based deck builder UI with Vue 3 Composition API
+Last activity: 2026-02-07 — Completed deck validation logic with TDD
 
-Progress: [███░░░░░░░░] 20%
+Progress: [████░░░░░░░] 40%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
+- Total plans completed: 5
 - Average duration: 3m
-- Total execution time: 0.2 hours
+- Total execution time: 0.25 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01    | 3     | 10m   | 3m       |
-| 02    | 1     | 2m    | 2m       |
+| 02    | 2     | 5m    | 2.5m     |
 
 **Recent Trend:**
-- Last 5 plans: 2.5m
+- Last 5 plans: 3m
 - Trend: Consistent fast execution
 
 *Updated after each plan completion*
@@ -54,6 +54,9 @@ Recent decisions affecting current work:
 9. **Vue 3 Composition API composables for state management** - Using reactive() and ref() for deck state instead of Vuex/Pinia (per research best practices)
 10. **Legendary cards limited to 1 copy** - Enforcing Hearthstone rules in useDeckBuilder composable (LEGENDARY rarity check)
 11. **Cards grouped by mana cost in deck list** - Organized 0-10+ for better deck overview (matches Hearthstone game UI)
+12. **Vitest with jsdom for testing** - Chose Vitest over Jest for better Vite integration, jsdom environment for DOM-like testing (plan 02-02)
+13. **Pure validation functions** - Separated business logic from Vue components for testability and reusability (plan 02-02)
+14. **Computed properties for validation reactivity** - DeckValidation component uses computed instead of watch for automatic updates (plan 02-02)
 
 ### Pending Todos
 
@@ -65,6 +68,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-07 05:21 UTC
-Stopped at: Completed 02-01 - List-based deck builder UI
+Last session: 2026-02-07 05:28 UTC
+Stopped at: Completed 02-02 - Deck validation logic
 Resume file: None
