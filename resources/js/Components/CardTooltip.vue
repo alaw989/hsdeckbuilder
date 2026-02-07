@@ -135,6 +135,10 @@ onBeforeUnmount(() => {
         <div class="relative">
           <!-- Card image -->
           <img
+            :srcset="`
+              https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png 1x,
+              https://art.hearthstonejson.com/v1/render/latest/enUS/512x/${card.id}.png 2x
+            `"
             :src="`https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png`"
             :alt="card.name"
             class="w-64 rounded-lg shadow-2xl"
@@ -178,6 +182,10 @@ onBeforeUnmount(() => {
 
           <!-- Card image -->
           <img
+            :srcset="`
+              https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png 1x,
+              https://art.hearthstonejson.com/v1/render/latest/enUS/512x/${card.id}.png 2x
+            `"
             :src="`https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png`"
             :alt="card.name"
             class="w-full"

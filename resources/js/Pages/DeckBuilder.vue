@@ -19,6 +19,7 @@ import SavedDecksModal from '@/Components/SavedDecksModal.vue';
 import ConfirmCloneModal from '@/Components/ConfirmCloneModal.vue';
 import AdSenseBanner from '@/Components/Ads/AdSenseBanner.vue';
 import AmazonCardPacks from '@/Components/Affiliates/AmazonCardPacks.vue';
+import MobileTabs from '@/Components/Mobile/MobileTabs.vue';
 import { useDeckStorage } from '@/Composables/useDeckStorage';
 import { serializeDeckForStorage } from '@/Utils/deckStorage';
 
@@ -53,6 +54,9 @@ const {
 // Tooltip state
 const hoveredCard = ref(null);
 const tooltipPosition = ref({ x: 0, y: 0 });
+
+// Mobile tab state
+const activeTab = ref('cards');
 
 function showTooltip(event, card) {
   hoveredCard.value = card;
@@ -492,8 +496,8 @@ function selectCard(card) {
       </div>
     </div>
 
-    <!-- Main content: split panel -->
-    <div class="max-w-7xl mx-auto px-4 py-6">
+    <!-- Desktop layout (existing) -->
+    <div class="max-w-7xl mx-auto px-4 py-6 hidden md:block">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         <!-- Left panel: Card selection (2/3 width) -->
@@ -603,6 +607,114 @@ function selectCard(card) {
         </div>
 
       </div>
+    </div>
+
+    <!-- Mobile tabbed layout -->
+    <div class="md:hidden min-h-screen pb-20">
+      <!-- Tab content -->
+      <div v-if="activeTab === 'cards'" class="px-4 py-4 space-y-4">
+        <!-- Import/Export/Save/Load buttons -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex space-x-3">
+            <div class="flex-1">
+              <DeckCodeImport @import-deck="handleImportDeck" />
+            </div>
+            <div class="flex-1">
+              <DeckCodeExport
+                :deck-code="deckCode"
+                :is-disabled="!isValidDeck"
+                @copy-deck-code="handleCopyDeckCode"
+              />
+            </div>
+          </div>
+          <div class="flex space-x-3">
+            <button
+              @click="handleSaveDeck"
+              class="flex-1 rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              :disabled="!isValidDeck"
+            >
+              Save Deck
+            </button>
+            <button
+              @click="showSavedDecksModal = true"
+              class="flex-1 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Load Decks
+            </button>
+          </div>
+        </div>
+
+        <!-- Search and filters -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <SearchInput
+            :model-value="searchQuery"
+            :suggestions="autocompleteSuggestions"
+            @update:model-value="searchQuery = $event"
+            @select="selectCard"
+            placeholder="Search cards to add to deck..."
+          />
+          <FilterPanel
+            :filters="filters"
+            :classes="classes"
+            :mana-costs="manaCosts"
+            :types="types"
+            :rarities="rarities"
+            :sets="cardSets"
+            @update-filter="updateFilter"
+          />
+        </div>
+
+        <!-- Available cards grid -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <h2 class="text-lg font-semibold text-gray-900 mb-3">
+            Available Cards ({{ filteredCards.length }})
+          </h2>
+          <CardGrid
+            :cards="filteredCards"
+            :show-add-button="true"
+            @add-card="handleCardSelect"
+            @card-hover="showTooltip"
+            @card-leave="hideTooltip"
+          />
+        </div>
+      </div>
+
+      <div v-else-if="activeTab === 'deck'" class="px-4 py-4 space-y-4">
+        <!-- Validation status -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <DeckValidation
+            :deck-cards="deckCards"
+            :selected-class="selectedClass"
+          />
+        </div>
+
+        <!-- Deck list -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <DeckList
+            :deck-cards="deckCards"
+            @remove-card="handleRemoveCard"
+            @set-count="handleSetCount"
+          />
+        </div>
+      </div>
+
+      <div v-else-if="activeTab === 'analytics'" class="px-4 py-4 space-y-4">
+        <!-- Deck stats -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <DeckStats :deck-cards="deckCards" />
+        </div>
+
+        <!-- Amazon affiliate links -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <AmazonCardPacks />
+        </div>
+      </div>
+
+      <!-- Mobile tabs -->
+      <MobileTabs
+        :active-tab="activeTab"
+        @change-tab="activeTab = $event"
+      />
     </div>
 
     <!-- Global tooltip -->

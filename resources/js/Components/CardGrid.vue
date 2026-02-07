@@ -45,6 +45,7 @@ function handleCardLeave() {
                         :src="`https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${card.id}.png`"
                         :alt="card.name"
                         loading="lazy"
+                        decoding="async"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200 cursor-pointer"
                         @click="addCard(card)"
                     />
